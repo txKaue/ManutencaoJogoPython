@@ -1,0 +1,68 @@
+Descrição
+    Este jogo de aventura em texto permite ao jogador explorar uma floresta escura, onde ele pode escolher entre diferentes direções para se aventurar. 
+    O objetivo é coletar itens, como uma chave, e usar esses itens para alcançar um objetivo final, como encontrar um tesouro escondido.
+
+Código:
+    Funções
+    1. mostrar_intro()
+        Descrição: Exibe uma introdução para o jogo, fornecendo uma breve descrição do cenário inicial.
+        Parâmetros: Nenhum.
+        Retorno: Nenhum.
+    2. obter_comando()
+        Descrição: Solicita ao jogador que forneça um comando de direção (norte, sul, leste, oeste) ou para sair do jogo.
+        Parâmetros: Nenhum.
+        Retorno: O comando inserido pelo jogador, convertido para minúsculas.
+    3. processar_comando(comando, localizacao, inventario)
+        Descrição: Processa o comando dado pelo jogador e atualiza a localização do jogador ou o inventário, conforme o comando. Também verifica se o comando é válido ou não.
+        Parâmetros:
+        comando (str): O comando inserido pelo jogador.
+        localizacao (str): A localização atual do jogador no jogo.
+        inventario (list): A lista de itens que o jogador possui.
+        Retorno: O comando, a nova localização e o inventário atualizado.
+    4. explorar_localizacao(localizacao, inventario)
+        Descrição: Define o que acontece quando o jogador explora uma localização específica. Isso inclui o recebimento de itens ou interações com o ambiente (ex. atravessar uma ponte).
+        Parâmetros:
+        localizacao (str): A localização atual do jogador.
+        inventario (list): A lista de itens que o jogador possui.
+        Retorno: A nova localização e o inventário atualizado.
+    5. jogar()
+        Descrição: Função principal que inicia o jogo. Chama as funções para mostrar a introdução, obter os comandos do jogador, processar os comandos e explorar as localizações até o jogador decidir sair.
+        Parâmetros: Nenhum.
+        Retorno: Nenhum.
+
+Como Jogar
+    O jogo começa com a exibição de uma introdução e a apresentação da primeira escolha de direção: norte ou leste.
+    O jogador escolhe um comando, como "norte" ou "leste", e o jogo processa essa escolha, atualizando a localização e exibindo descrições do ambiente.
+    O jogador pode explorar diferentes locais, como uma cabana e um rio, interagir com os itens encontrados e tomar decisões baseadas no inventário.
+    O objetivo final é atravessar o rio com a chave e encontrar o tesouro escondido.
+    O jogador pode sair do jogo a qualquer momento digitando "sair".
+
+Erros no Código
+
+    Retorno de Localização na Função processar_comando:
+        O jogo possui um erro de lógica na função processar_comando. Quando o comando é norte ou leste, a variável localizacao é alterada dentro da função, mas isso não afeta a variável localizacao na função principal (jogar), porque a variável localizacao é passada por valor para a função, não por referência. O código tenta atualizar a localização, mas isso não é refletido fora da função.
+        Solução: Retornar a variável localizacao corretamente dentro da função processar_comando para que ela seja atualizada na função principal.
+
+    Condicional para Explorar o Rio:
+        Na função explorar_localizacao, ao chegar no rio, a interação com a chave e a ponte não é clara. Se o jogador já tem a chave, o código permite que ele atravesse, mas a variável localizacao não está sendo corretamente atualizada para o tesouro após a interação com a chave. Além disso, a interação para atravessar a ponte com a chave não é bem tratada.
+        Solução: Certifique-se de que a variável localizacao seja atualizada para "tesouro" corretamente quando o jogador usar a chave para atravessar a ponte.
+
+    Comandos de Direção Bloqueados:
+        No código, os comandos sul e oeste não têm efeito no jogo, pois o código está apenas informando que o jogador não pode ir para essas direções. Isso pode ser confuso e frustrante, pois o jogador pode tentar explorar outras direções.
+        Solução: Adicionar mais interações ou opções para as direções não exploradas ou permitir que o jogador se mova para outros locais.
+    
+    Dependência do Comando explorar_localizacao:
+        O jogo exige que o jogador interaja com os locais de uma forma muito linear. A cabana e o rio são interações importantes, mas elas poderiam ser mais dinâmicas. Por exemplo, o jogo não permite voltar à floresta depois de ir para a cabana ou o rio.
+        Solução: Permitir ao jogador retornar às localizações anteriores ou adicionar mais escolhas de exploração.
+
+Opinião sobre o código:
+    Eu achei a estrutura muito confusa. A existência de uma função para obter comando que não permite variações das opções, uma função de explorar local e uma função apenas para processar o comando tornam muito confusa qualquer manutenção ou adaptação do jogo.
+    A falta de uma classe jogador com atributos convenientes obriga o programador a passar atributos repetidas vezes.
+    Eu particularmente não gosto de códigos que possuem múltiplas funções no código principal.
+
+
+Correção:
+    Eu ajustei alguns trechos que estavam confusos, apliquei algumas mudanças na manipulação da localização.
+    Além disso eu adicionei uma função que permite voltar de dentro da cabana para a floresta e voltar do rio para a floresta.
+    Essa função gerou um problem que permitia que o jogador pegasse a chave e o tesouro diversas vezes. Para lidar com isso eu adicionei novas mensagens do narrador e novas verificações de inventário.
+    
