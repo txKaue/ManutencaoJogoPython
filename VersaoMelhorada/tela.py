@@ -90,9 +90,13 @@ class Tela:
 
         if player.getLocal() == "floresta":
             if opcao == "Ir para o Norte":
+                texto = "Você chega até uma velha cabana abandonada."
+                self.fala.config(text=texto)
                 player.setLocal("cabana")
                 self.MudaFundo("./assets/casinha.png")
             elif opcao == "Ir para o Leste":
+                texto = "Você encontra uma ponte misteriosa com uma grade impedindo a passagem."
+                self.fala.config(text=texto)
                 player.setLocal("ponte")
                 self.MudaFundo("./assets/ponte.png")
             elif opcao == "Voltar":
@@ -105,8 +109,6 @@ class Tela:
                 self.janela.destroy()
 
         elif player.getLocal() == "cabana":
-            texto = "Você chega até uma velha cabana abandonada."
-            self.fala.config(text=texto)
             if opcao == "Olhar para janela":
                 player.setLocal("cabana")
                 #self.MudaFundo("./assets/casinha.png")
@@ -114,17 +116,18 @@ class Tela:
                 player.setLocal("cabanaDentro")
                 #self.MudaFundo("./assets/ponte.png")
             elif opcao == "Voltar":
+                texto = "Você volta para a floresta."
+                self.fala.config(text=texto)
                 player.setLocal("floresta")
-                self.MudaFundo("./assets/floresta.png")
+                self.MudaFundo("./assets/mato.png")
             elif opcao == "Sair":
                 self.janela.destroy()
 
         elif player.getLocal() == "ponte":
-            texto = "Você encontra uma ponte misteriosa com uma grade impedindo a passagem."
-            self.fala.config(text=texto)
             if opcao == "Olhar portão":
-                player.setLocal("cabana")
+                #player.setLocal("cabana")
                 #self.MudaFundo("./assets/casinha.png")
+                print("AAAAAAA")
             elif opcao == "Passar":
                 # Adicionar verificação da chave
                 #player.setLocal("tesouro")
@@ -134,8 +137,10 @@ class Tela:
                 self.fala.config(text=texto)
                 self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
             elif opcao == "Voltar":
+                texto = "Você volta para a floresta."
+                self.fala.config(text=texto)
                 player.setLocal("floresta")
-                self.MudaFundo("./assets/floresta.png")
+                self.MudaFundo("./assets/mato.png")
             elif opcao == "Sair":
                 self.janela.destroy()
                 
