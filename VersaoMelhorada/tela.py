@@ -105,6 +105,8 @@ class Tela:
                 self.janela.destroy()
 
         elif player.getLocal() == "cabana":
+            texto = "Você chega até uma velha cabana abandonada."
+            self.fala.config(text=texto)
             if opcao == "Olhar para janela":
                 player.setLocal("cabana")
                 #self.MudaFundo("./assets/casinha.png")
@@ -118,6 +120,8 @@ class Tela:
                 self.janela.destroy()
 
         elif player.getLocal() == "ponte":
+            texto = "Você encontra uma ponte misteriosa com uma grade impedindo a passagem."
+            self.fala.config(text=texto)
             if opcao == "Olhar portão":
                 player.setLocal("cabana")
                 #self.MudaFundo("./assets/casinha.png")

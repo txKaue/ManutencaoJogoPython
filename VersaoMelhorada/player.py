@@ -16,6 +16,12 @@ class Player:
 
     def addItem(self, item):
         self.inventario.append(item)
+
+    def temItem(self, item):
+        if item in self.inventario:
+            return True
+        else:
+            False
     
     # função interna
     def findItem(self, item):
