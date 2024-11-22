@@ -1,8 +1,6 @@
 from tela import Tela
 from time import sleep
 
-##Início básico
-
 titulo = "Jogo RPG"
 tamanho = "800x700"
 fundo = "./assets/mato.png"
