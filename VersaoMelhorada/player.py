@@ -2,7 +2,7 @@ class Player:
 
     def __init__(self, nome):
         self.nome = nome
-        self.local = ""
+        self.local = "floresta"
         self.inventario = []
 
     def __str__(self):

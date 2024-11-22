@@ -90,8 +90,10 @@ class Tela:
 
         if player.getLocal() == "floresta":
             if opcao == "Ir para o Norte":
+                player.setLocal("cabana")
                 self.MudaFundo("./assets/casinha.png")
             elif opcao == "Ir para o Leste":
+                player.setLocal("ponte")
                 self.MudaFundo("./assets/ponte.png")
             elif opcao == "Voltar":
                 #self.texto_inferior.config(text=f"Você não tem para onde voltar")
@@ -99,6 +101,37 @@ class Tela:
                 texto = "Você não tem para onde voltar"
                 self.fala.config(text=texto)
                 self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+            elif opcao == "Sair":
+                self.janela.destroy()
+
+        elif player.getLocal() == "cabana":
+            if opcao == "Olhar para janela":
+                player.setLocal("cabana")
+                #self.MudaFundo("./assets/casinha.png")
+            elif opcao == "Entrar":
+                player.setLocal("cabanaDentro")
+                #self.MudaFundo("./assets/ponte.png")
+            elif opcao == "Voltar":
+                player.setLocal("floresta")
+                self.MudaFundo("./assets/floresta.png")
+            elif opcao == "Sair":
+                self.janela.destroy()
+
+        elif player.getLocal() == "ponte":
+            if opcao == "Olhar portão":
+                player.setLocal("cabana")
+                #self.MudaFundo("./assets/casinha.png")
+            elif opcao == "Passar":
+                # Adicionar verificação da chave
+                #player.setLocal("tesouro")
+                #self.MudaFundo("./assets/ponte.png")
+                textoAntigo = self.fala.cget('text')
+                texto = "Você precisa de uma chave"
+                self.fala.config(text=texto)
+                self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+            elif opcao == "Voltar":
+                player.setLocal("floresta")
+                self.MudaFundo("./assets/floresta.png")
             elif opcao == "Sair":
                 self.janela.destroy()
                 
