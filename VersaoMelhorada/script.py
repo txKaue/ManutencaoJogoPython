@@ -4,7 +4,7 @@ from player import Player
 
 titulo = "Jogo RPG"
 tamanho = "800x700"
-fundo = "./assets/mato.png"
+fundo = "./assets/floresta.png"
 texto = "Você está em uma floresta escura. Uma trilha se estende ao norte e outra ao leste."
 op1 = "Ir para o Norte"
 op2 = "Ir para o Leste"

@@ -54,13 +54,13 @@ class Tela:
 
         # Botões com bordas e fundo, todos com o mesmo tamanho
         self.botao_1 = tk.Button(linha_1, text=opcoes[0], font=("Arial", 14),
-                    command=lambda opcao=opcoes[0]: self.opcao_clicada(opcao, player),  # Chamando a função com self
+                    command=lambda opcao=opcoes[0]: self.opcao_clicada(self.botao_1.cget("text"), player),  # Chamando a função com self
                     bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                     width=largura_botao, height=altura_botao)
         self.botao_1.pack(side="left", padx=20)
 
         self.botao_2 = tk.Button(linha_1, text=opcoes[1], font=("Arial", 14),
-                     command=lambda opcao=opcoes[1]: self.opcao_clicada(opcao, player),  # Usar self para chamar o método
+                     command=lambda opcao=opcoes[1]: self.opcao_clicada(self.botao_2.cget("text"), player),  # Usar self para chamar o método
                      bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                      width=largura_botao, height=altura_botao)
         self.botao_2.pack(side="left", padx=20)
@@ -70,13 +70,13 @@ class Tela:
         linha_2.pack(side="top", pady=10)
 
         self.botao_3 = tk.Button(linha_2, text=opcoes[2], font=("Arial", 14),
-                     command=lambda opcao=opcoes[2]: self.opcao_clicada(opcao, player),  # Usar self para chamar o método
+                     command=lambda opcao=opcoes[2]: self.opcao_clicada(self.botao_3.cget("text"), player),  # Usar self para chamar o método
                      bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                      width=largura_botao, height=altura_botao)
         self.botao_3.pack(side="left", padx=20)
 
         self.botao_4 = tk.Button(linha_2, text=opcoes[3], font=("Arial", 14),
-                     command=lambda opcao=opcoes[3]: self.opcao_clicada(opcao, player),  # Usar self para chamar o método
+                     command=lambda opcao=opcoes[3]: self.opcao_clicada(self.botao_4.cget("text"), player),  # Usar self para chamar o método
                      bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                      width=largura_botao, height=altura_botao)
         self.botao_4.pack(side="left", padx=20)
@@ -85,17 +85,18 @@ class Tela:
         self.janela.mainloop()
 
     def opcao_clicada(self, opcao, player):
-
+    
         ## Se estiver na floresta
 
         if player.getLocal() == "floresta":
-
+            print(opcao)
             if opcao == "Ir para o Norte":
                 texto = "Você chega até uma velha cabana abandonada."
-                self.AtualizarBotoes(["Olhar Janela", "Entrar na cabana"])
+                self.AtualizarBotoes(["Olhar janela", "Entrar na cabana"])
+
                 self.fala.config(text=texto)
-                player.setLocal("cabana")
-                self.MudaFundo("./assets/casinha.png")
+                player.setLocal("cabanaFora")
+                self.MudaFundo("./assets/cabanaFora.png")
             elif opcao == "Ir para o Leste":
                 texto = "Você encontra uma ponte misteriosa com uma grade impedindo a passagem."
                 self.AtualizarBotoes(["Passar pela ponte", "Observar grade"])
@@ -113,31 +114,90 @@ class Tela:
 
 
 
-        elif player.getLocal() == "cabana":
-            if opcao == "Olhar para janela":
-                player.setLocal("cabana")
-                #self.MudaFundo("./assets/casinha.png")
-            elif opcao == "Entrar":
+        elif player.getLocal() == "cabanaFora":
+            print(opcao)
+            if opcao == "Olhar janela":
+                self.AtualizarBotoes(["Bater na janela", "Chamar alguém"])
+                self.MudaFundo("./assets/janelaCabana.png")
+                player.setLocal("janelaCabana")
+
+            elif opcao == "Entrar na cabana":
                 player.setLocal("cabanaDentro")
-                #self.MudaFundo("./assets/ponte.png")
+                texto = "Dentro da cabana você encontra uma chave em cima de uma poltrona velha."
+                self.AtualizarBotoes(["Pegar chave", "Chamar alguém"])
+                self.fala.config(text=texto)
+                self.MudaFundo("./assets/cabanaDentro.png")
+
             elif opcao == "Voltar":
                 self.AtualizarBotoes(["Ir para o Norte", "Ir para o Leste"])
                 texto = "Você volta para a floresta."
                 self.fala.config(text=texto)
                 player.setLocal("floresta")
-                self.MudaFundo("./assets/mato.png")
+                self.MudaFundo("./assets/floresta.png")
+            elif opcao == "Sair":
+                self.janela.destroy()
+
+        elif player.getLocal() == "janelaCabana":
+            print(opcao)
+            if opcao == "Bater na janela":
+                #player.setLocal("janelaCabana")
+                self.MudaFundo("./assets/janelaCabana.png")
+                textoAntigo = self.fala.cget('text')
+                texto = "Você bate na janela e nada acontece"
+                self.fala.config(text=texto)
+                self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+
+            elif opcao == "Chamar alguém":
+                #player.setLocal("cabanaDentro")
+                #self.MudaFundo("./assets/ponte.png")
+                textoAntigo = self.fala.cget('text')
+                texto = "Você chama alguém e nada acontece"
+                self.fala.config(text=texto)
+                self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+
+            elif opcao == "Voltar":
+                self.AtualizarBotoes(["Olhar janela", "Entrar na cabana"])
+                texto = "Você volta para a porta da cabana."
+                self.fala.config(text=texto)
+                player.setLocal("cabanaFora")
+                self.MudaFundo("./assets/cabanaFora.png")
+
+            elif opcao == "Sair":
+                self.janela.destroy()
+
+
+        
+        elif player.getLocal() == "cabanaDentro":
+            print(opcao)
+            if opcao == "Pegar chave":
+                textoAntigo = self.fala.cget('text')
+                texto = "Você pega a chave. Não há mais nada aqui."
+                self.fala.config(text=texto)
+
+            elif opcao == "Chamar alguém":
+                textoAntigo = self.fala.cget('text')
+                texto = "Você chama alguém e nada acontece"
+                self.fala.config(text=texto)
+                self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+
+            elif opcao == "Voltar":
+                self.AtualizarBotoes(["Olhar janela", "Entrar na cabana"])
+                texto = "Você volta para a porta da cabana."
+                self.fala.config(text=texto)
+                player.setLocal("cabanaFora")
+                self.MudaFundo("./assets/cabanaFora.png")
+
             elif opcao == "Sair":
                 self.janela.destroy()
 
 
 
 
-
         elif player.getLocal() == "ponte":
-            if opcao == "Olhar portão":
-                #player.setLocal("cabana")
-                #self.MudaFundo("./assets/casinha.png")
-                print("AAAAAAA")
+            print(opcao)
+            if opcao == "Observar grade":
+                player.setLocal("portao")
+                self.MudaFundo("./assets/cadeado.png")
             elif opcao == "Passar":
                 # Adicionar verificação da chave
                 #player.setLocal("tesouro")
@@ -151,7 +211,7 @@ class Tela:
                 texto = "Você volta para a floresta."
                 self.fala.config(text=texto)
                 player.setLocal("floresta")
-                self.MudaFundo("./assets/mato.png")
+                self.MudaFundo("./assets/floresta.png")
             elif opcao == "Sair":
                 self.janela.destroy()
                 
