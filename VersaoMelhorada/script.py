@@ -4,11 +4,11 @@ from tela import Tela
 
 titulo = "Jogo RPG"
 tamanho = "800x800"
-fundo = "./assets/floresta.jpg"
-texto = "Teste"
-op1 = "A"
-op2 = "B"
-op3 = "C"
-op4 = "D"
+fundo = "./assets/floresta.png"
+texto = "Você está em uma floresta escura. Uma trilha se estende ao norte e outra ao leste."
+op1 = "Ir para o Norte"
+op2 = "Ir para o Sul"
+op3 = "Ir para o Leste"
+op4 = "Ir para o Oeste"
 
 tela = Tela.CriarTela(titulo, tamanho, fundo, texto, op1, op2, op3, op4)
