@@ -1,5 +1,6 @@
 from tela import Tela
 from time import sleep
+from player import Player
 
 titulo = "Jogo RPG"
 tamanho = "800x700"
@@ -10,9 +11,6 @@ op2 = "Ir para o Leste"
 op3 = "Voltar"
 op4 = "Sair"
 
-tela = Tela(titulo, tamanho, fundo, texto, op1, op2, op3, op4)
-
-fundoNovo = "./assets/casinha.png"
-
-
+player = Player("Kauê")
+tela = Tela(titulo, tamanho, fundo, texto, op1, op2, op3, op4, player)
 

@@ -6,7 +6,7 @@ from time import sleep
 
 class Tela:
     # Função para criar a tela
-    def __init__(self, titulo, tamanho, fundo, texto, op1, op2, op3, op4):
+    def __init__(self, titulo, tamanho, fundo, texto, op1, op2, op3, op4, player):
         # Cria a janela principal
         self.janela = tk.Tk()
         self.janela.title(titulo)  # Título da janela
@@ -54,13 +54,13 @@ class Tela:
 
         # Botões com bordas e fundo, todos com o mesmo tamanho
         self.botao_1 = tk.Button(linha_1, text=opcoes[0], font=("Arial", 14),
-                    command=lambda opcao=opcoes[0]: self.opcao_clicada(opcao),  # Chamando a função com self
+                    command=lambda opcao=opcoes[0]: self.opcao_clicada(opcao, player),  # Chamando a função com self
                     bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                     width=largura_botao, height=altura_botao)
         self.botao_1.pack(side="left", padx=20)
 
         self.botao_2 = tk.Button(linha_1, text=opcoes[1], font=("Arial", 14),
-                     command=lambda opcao=opcoes[1]: self.opcao_clicada(opcao),  # Usar self para chamar o método
+                     command=lambda opcao=opcoes[1]: self.opcao_clicada(opcao, player),  # Usar self para chamar o método
                      bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                      width=largura_botao, height=altura_botao)
         self.botao_2.pack(side="left", padx=20)
@@ -70,13 +70,13 @@ class Tela:
         linha_2.pack(side="top", pady=10)
 
         self.botao_3 = tk.Button(linha_2, text=opcoes[2], font=("Arial", 14),
-                     command=lambda opcao=opcoes[2]: self.opcao_clicada(opcao),  # Usar self para chamar o método
+                     command=lambda opcao=opcoes[2]: self.opcao_clicada(opcao, player),  # Usar self para chamar o método
                      bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                      width=largura_botao, height=altura_botao)
         self.botao_3.pack(side="left", padx=20)
 
         self.botao_4 = tk.Button(linha_2, text=opcoes[3], font=("Arial", 14),
-                     command=lambda opcao=opcoes[3]: self.opcao_clicada(opcao),  # Usar self para chamar o método
+                     command=lambda opcao=opcoes[3]: self.opcao_clicada(opcao, player),  # Usar self para chamar o método
                      bd=2, highlightthickness=1, relief="raised", bg="lightblue", fg="black",
                      width=largura_botao, height=altura_botao)
         self.botao_4.pack(side="left", padx=20)
@@ -84,24 +84,24 @@ class Tela:
         # Exibir a janela
         self.janela.mainloop()
 
-    def opcao_clicada(self, opcao):
+    def opcao_clicada(self, opcao, player):
 
-        if opcao == "Ir para o Norte":
-            self.MudaFundo("./assets/casinha.png")
-        elif opcao == "Ir para o Leste":
-            self.MudaFundo("./assets/ponte.png")
-        elif opcao == "Voltar":
-            
-            #self.texto_inferior.config(text=f"Você não tem para onde voltar")
-            textoAntigo = self.fala.cget('text')
-            texto = "Você não tem para onde voltar"
-            self.fala.config(text=texto)
-            self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+        ## Se estiver na floresta
 
-        elif opcao == "Sair":
-            self.janela.destroy()
-        
-
+        if player.getLocal() == "floresta":
+            if opcao == "Ir para o Norte":
+                self.MudaFundo("./assets/casinha.png")
+            elif opcao == "Ir para o Leste":
+                self.MudaFundo("./assets/ponte.png")
+            elif opcao == "Voltar":
+                #self.texto_inferior.config(text=f"Você não tem para onde voltar")
+                textoAntigo = self.fala.cget('text')
+                texto = "Você não tem para onde voltar"
+                self.fala.config(text=texto)
+                self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+            elif opcao == "Sair":
+                self.janela.destroy()
+                
     def MudaFundo(self, img):
         # Carregar a nova imagem de fundo
         imagem_fundo = Image.open(img)
