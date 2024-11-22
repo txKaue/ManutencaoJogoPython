@@ -89,13 +89,16 @@ class Tela:
         ## Se estiver na floresta
 
         if player.getLocal() == "floresta":
+
             if opcao == "Ir para o Norte":
                 texto = "Você chega até uma velha cabana abandonada."
+                self.AtualizarBotoes(["Olhar Janela", "Entrar na cabana"])
                 self.fala.config(text=texto)
                 player.setLocal("cabana")
                 self.MudaFundo("./assets/casinha.png")
             elif opcao == "Ir para o Leste":
                 texto = "Você encontra uma ponte misteriosa com uma grade impedindo a passagem."
+                self.AtualizarBotoes(["Passar pela ponte", "Observar grade"])
                 self.fala.config(text=texto)
                 player.setLocal("ponte")
                 self.MudaFundo("./assets/ponte.png")
@@ -108,6 +111,8 @@ class Tela:
             elif opcao == "Sair":
                 self.janela.destroy()
 
+
+
         elif player.getLocal() == "cabana":
             if opcao == "Olhar para janela":
                 player.setLocal("cabana")
@@ -116,12 +121,17 @@ class Tela:
                 player.setLocal("cabanaDentro")
                 #self.MudaFundo("./assets/ponte.png")
             elif opcao == "Voltar":
+                self.AtualizarBotoes(["Ir para o Norte", "Ir para o Leste"])
                 texto = "Você volta para a floresta."
                 self.fala.config(text=texto)
                 player.setLocal("floresta")
                 self.MudaFundo("./assets/mato.png")
             elif opcao == "Sair":
                 self.janela.destroy()
+
+
+
+
 
         elif player.getLocal() == "ponte":
             if opcao == "Olhar portão":
@@ -137,6 +147,7 @@ class Tela:
                 self.fala.config(text=texto)
                 self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
             elif opcao == "Voltar":
+                self.AtualizarBotoes(["Ir para o Norte", "Ir para o Leste"])
                 texto = "Você volta para a floresta."
                 self.fala.config(text=texto)
                 player.setLocal("floresta")
@@ -183,3 +194,11 @@ class Tela:
         posicao = f"{tamanho}+{x}+{y-35}"
 
         return posicao
+    
+    def AtualizarBotoes(self, novos_textos):
+
+        if len(novos_textos) == 2:  # Verifica se a lista contém exatamente 4 elementos
+            # Atualiza o texto de cada botão
+            self.botao_1.config(text=novos_textos[0])
+            self.botao_2.config(text=novos_textos[1])
+
