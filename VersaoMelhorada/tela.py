@@ -114,19 +114,29 @@ class Tela:
 
 
 
+
+
         elif player.getLocal() == "cabanaFora":
             print(opcao)
             if opcao == "Olhar janela":
+                texto = "Você olha pela janela e não consegue ver nada."
+                self.fala.config(text=texto)
                 self.AtualizarBotoes(["Bater na janela", "Chamar alguém"])
                 self.MudaFundo("./assets/janelaCabana.png")
                 player.setLocal("janelaCabana")
 
             elif opcao == "Entrar na cabana":
                 player.setLocal("cabanaDentro")
-                texto = "Dentro da cabana você encontra uma chave em cima de uma poltrona velha."
-                self.AtualizarBotoes(["Pegar chave", "Chamar alguém"])
-                self.fala.config(text=texto)
-                self.MudaFundo("./assets/cabanaDentro.png")
+                if (player.temItem("chave")):
+                    texto = "Dentro da cabana você encontra somente uma poltrona velha."
+                    self.fala.config(text=texto)
+                    self.AtualizarBotoes(["Não fazer nada", "Chamar alguém"])
+                    self.MudaFundo("./assets/cabanaDentro.png")
+                else:
+                    self.AtualizarBotoes(["Pegar chave", "Chamar alguém"])
+                    texto = "Dentro da cabana você encontra uma chave em uma poltrona velha."
+                    self.fala.config(text=texto)
+                    self.MudaFundo("./assets/cabanaDentro.png")
 
             elif opcao == "Voltar":
                 self.AtualizarBotoes(["Ir para o Norte", "Ir para o Leste"])
@@ -136,6 +146,8 @@ class Tela:
                 self.MudaFundo("./assets/floresta.png")
             elif opcao == "Sair":
                 self.janela.destroy()
+
+
 
         elif player.getLocal() == "janelaCabana":
             print(opcao)
@@ -166,13 +178,15 @@ class Tela:
                 self.janela.destroy()
 
 
-        
+        ############# DENTRO DA CABANA AQUI ################
         elif player.getLocal() == "cabanaDentro":
             print(opcao)
             if opcao == "Pegar chave":
                 textoAntigo = self.fala.cget('text')
                 texto = "Você pega a chave. Não há mais nada aqui."
                 self.fala.config(text=texto)
+                player.addItem("chave")
+                self.AtualizarBotoes(["Não fazer nada", "Chamar alguém"])
 
             elif opcao == "Chamar alguém":
                 textoAntigo = self.fala.cget('text')
@@ -186,6 +200,11 @@ class Tela:
                 self.fala.config(text=texto)
                 player.setLocal("cabanaFora")
                 self.MudaFundo("./assets/cabanaFora.png")
+            
+            elif opcao == "Não fazer nada":
+                textoAntigo = self.fala.cget('text')
+                texto = "Você não faz nada."
+                self.fala.config(text=texto)
 
             elif opcao == "Sair":
                 self.janela.destroy()
