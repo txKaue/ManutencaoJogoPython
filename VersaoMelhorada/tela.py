@@ -3,7 +3,7 @@ from tkinter import PhotoImage
 
 class Tela:
     # Função para criar a tela
-    def CriarTela(titulo, tamanho, fundo, texto, op1, op2, op3, op4):
+    def __init__ (self, titulo, tamanho, fundo, texto, op1, op2, op3, op4):
         # Cria a janela principal
         janela = tk.Tk()
         janela.title(titulo)  # Título da janela

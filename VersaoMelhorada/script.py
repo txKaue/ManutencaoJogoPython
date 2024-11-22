@@ -1,6 +1,6 @@
 from tela import Tela
 
-##Criando uma instancia do criador de tela
+##Início básico
 
 titulo = "Jogo RPG"
 tamanho = "800x800"
@@ -11,4 +11,5 @@ op2 = "Ir para o Sul"
 op3 = "Ir para o Leste"
 op4 = "Ir para o Oeste"
 
-tela = Tela.CriarTela(titulo, tamanho, fundo, texto, op1, op2, op3, op4)
+tela = Tela(titulo, tamanho, fundo, texto, op1, op2, op3, op4)
+
