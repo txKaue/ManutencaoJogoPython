@@ -86,7 +86,6 @@ class Tela:
         self.janela.mainloop()
 
     def opcao_clicada(self, opcao, player):
-        global cadeado
     
         ## Se estiver na floresta
         self.AtualizarPlayerInfo(player)
@@ -231,6 +230,7 @@ class Tela:
                     self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
                 else:
                     texto = "Você encontrou um tesouro do outro lado da ponte!"
+                    self.AtualizarBotoes(["Pegar", "Não fazer nada"])
                     self.fala.config(text=texto)
                     player.setLocal("tesouro")
                     self.MudaFundo("./assets/tesouro.png")
@@ -249,7 +249,7 @@ class Tela:
                 if player.temItem("chave"):
                     texto = "Você abriu o cadeado com a chave que achou."
                     self.fala.config(text=texto)
-                    cadeado = False
+                    self.cadeado = False
                 else:
                     texto = "Você precisa de uma chave."
                     self.fala.config(text=texto)
@@ -261,11 +261,35 @@ class Tela:
                 self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
                 
             elif opcao == "Voltar":
-                self.AtualizarBotoes(["Ir para o Norte", "Ir para o Leste"])
-                texto = "Você volta para a floresta."
+                self.AtualizarBotoes(["Passar pela ponte", "Observar grade"])
+                texto = "Você volta para a ponte."
                 self.fala.config(text=texto)
-                player.setLocal("floresta")
-                self.MudaFundo("./assets/floresta.png")
+                player.setLocal("ponte")
+                self.MudaFundo("./assets/ponte.png")
+
+            elif opcao == "Sair":
+                self.janela.destroy()
+
+        elif player.getLocal() == "tesouro":
+            print(opcao)
+            if opcao == "Pegar":
+                texto = "Você pega o tesouro e ouve um barulho misterioso vindo da floresta."
+                self.fala.config(text=texto)
+
+                ### fazer nova parte depois
+
+            elif opcao == "Não fazer nada":
+                textoAntigo = self.fala.cget('text')
+                texto = "Você não faz nada."
+                self.fala.config(text=texto)
+                self.fala.after(1000, lambda: self.fala.config(text=textoAntigo))
+                
+            elif opcao == "Voltar":
+                self.AtualizarBotoes(["Passar pela ponte", "Observar grade"])
+                texto = "Você volta para a ponte."
+                self.fala.config(text=texto)
+                player.setLocal("ponte")
+                self.MudaFundo("./assets/ponte.png")
 
             elif opcao == "Sair":
                 self.janela.destroy()
