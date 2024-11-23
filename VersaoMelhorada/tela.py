@@ -33,7 +33,7 @@ class Tela:
         self.fala.pack(pady=20)
 
         # Texto no canto inferior (centralizado)
-        self.texto_inferior = tk.Label(self.janela, text="Texto padrão no rodapé", font=("Arial", 12), bg="black", fg="white")
+        self.texto_inferior = tk.Label(self.janela, text=f"{player}", font=("Arial", 12), bg="black", fg="white")
         self.texto_inferior.pack(side="bottom", pady=20, fill="x", anchor="s")
 
         # Botões de opções: duas opções em cima e duas embaixo
@@ -87,6 +87,7 @@ class Tela:
     def opcao_clicada(self, opcao, player):
     
         ## Se estiver na floresta
+        self.AtualizarPlayerInfo(player)
 
         if player.getLocal() == "floresta":
             print(opcao)
@@ -184,6 +185,7 @@ class Tela:
             if opcao == "Pegar chave":
                 textoAntigo = self.fala.cget('text')
                 texto = "Você pega a chave. Não há mais nada aqui."
+                self.AtualizarPlayerInfo(player)
                 self.fala.config(text=texto)
                 player.addItem("chave")
                 self.AtualizarBotoes(["Não fazer nada", "Chamar alguém"])
@@ -281,3 +283,6 @@ class Tela:
             self.botao_1.config(text=novos_textos[0])
             self.botao_2.config(text=novos_textos[1])
 
+    def AtualizarPlayerInfo(self, player):
+        if hasattr(self, "texto_inferior"):
+            self.texto_inferior.config(text=f"{player}")

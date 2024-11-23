@@ -6,7 +6,7 @@ class Player:
         self.inventario = []
 
     def __str__(self):
-        return f"{self.nome} -> Local: {self.local}\nInventário: {self.inventario}"
+        return f"{self.nome}\nInventário: {self.inventario}"
 
     def getLocal(self):
         return self.local
